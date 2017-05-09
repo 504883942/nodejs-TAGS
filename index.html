@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body ng-app="FileApp">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="navbar-brand" href="#">
+                    怎样~
+                </div>
+            </div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills  navbar-nav " role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">添加</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">历史记录</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">统计</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">关于</a></li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="container ">
+        <div class="col-md-12">
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <form>
+                        <h4>评价一下吧~
+                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">管理标签
+                            </a>
+                        </h4>
+                        <div class="form-group ">
+
+                            <select class="select form-control" multiple="multiple"></select>
+                        </div>
+                        <div class="form-group text-center">
+                            <input id="demo3_22" type="text" class=" dial" data-min="0" data-max="10" value="5">
+                        </div>
+
+                        <button type="submit" class="btn btn-default">确认</button>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane " id="profile">
+                    <h2>历史记录</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>标签</td>
+                                <td>评分</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>早起</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>早起</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>早起</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>早起</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>早起</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>早起</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    <h2>统计</h2>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="settings">
+                    <h2>关于</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">标签管理</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+    <script src="http://cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script src="http://cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
+    <script>
+        $(function() {
+            var data = [{
+                id: 0,
+                text: '早起'
+            }, {
+                id: 1,
+                text: '早睡'
+            }, {
+                id: 2,
+                text: '看书'
+            }, {
+                id: 3,
+                text: '写代码'
+            }];
+
+            $(".select").select2({
+                data: data
+            })
+            $(".dial").knob();
+        });
+    </script>
+    <script>
+        //设置服务器地址
+        var serverUrl = "http://localhost:3000";
+        //angulerjs的模块和控制器设置
+        var app = angular.module('FileApp', []);
+        app.controller('filelist', function($scope, $http) {
+            //设置将会用到的图标类型，不同的文件用不同的图标
+            $scope.IconMaps = {
+                zip: "file-zip-o",
+                txt: "file-text-o",
+                mp4: "file-movie-o",
+                xlsx: "file-excel-o",
+                js: "file-code-o",
+                cs: "file-code-o",
+                html: "file-code-o",
+                mp3: "file-audio-o",
+                jpg: "file-image-o",
+                jpeg: "file-image-o",
+                png: "file-image-o",
+                pdf: "file-pdf-o",
+                doc: "file-word-o",
+                dir: "folder-o",
+                iso: "file-archive-o"
+            };
+            //初始化当前窗口需要显示的文件列表
+            $scope.filelist = [];
+            //初始化默认当前目录
+            $scope.currentPath = "D:/";
+            //初始化历史纪录
+            $scope.last = [];
+            //打开某个路径时所执行的函数
+            $scope.OpenPath = function() {
+                    //向某个地址post提交，当前目录
+                    $http.post(serverUrl + '/path', {
+                        uri: $scope.currentPath
+                    }).success(function(data) {
+                        //将成功获取的数据赋值给当前显示的文件列表
+                        $scope.filelist = data;
+                    })
+                }
+                //打开文件列表中的某一项时执行的函数
+            $scope.Open = function(x) {
+                    //如果是目录
+                    if (x.type == "dir") {
+                        //添加历史纪录
+                        $scope.last.push($scope.currentPath);
+                        //修改当前目录
+                        $scope.currentPath = $scope.currentPath + x.name + "/"
+                            //当前目录
+                        $scope.OpenPath();
+                    } else {
+                        //如果是文件，则打开那个文件
+                        window.open(serverUrl + "/detail?uri=" + $scope.currentPath + x.fullname);
+                    }
+
+                }
+                //返回某一个路径x
+            $scope.Last = function(x) {
+                    //将当前路径设置为x
+                    $scope.currentPath = x;
+                    //打开当前路径
+                    $scope.OpenPath();
+                }
+                //打开当前路径
+            $scope.OpenPath();
+        });
+    </script>
+</body>
+
+</html>
